@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="36afdba2-a0a7-4046-8a53-c20401f4643e" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="hellomuleFlow" doc:id="5fd9d6ed-8538-4afa-b432-27f2aa983819" >
+		<http:listener doc:name="Listener" doc:id="2dfb4c9d-0ffc-4561-a552-405290a83fe0" path="/hello" config-ref="HTTP_Listener_config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6d5853c8-acbb-47b5-8fe4-e3bab3f6d723" message='#["Hello world"]'/>
+		<flow-ref doc:name="Flow Reference" doc:id="a40d332e-1d58-4f12-b607-81bda03b6cce" name="hellomuleSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c7728bc8-276a-4df3-99dd-ba3aea28ab3e" message='#["back to main flow"]'/>
+		<flow-ref doc:name="Flow Reference" doc:id="ae24d42b-d513-402c-afd3-ed544096a7df" name="hellomuleFlow1"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a954f8bd-30d3-4131-8e9a-132997d06a78" message='#["End of flow"]'/>
+	</flow>
+	<flow name="hellomuleFlow1" doc:id="6daf71a9-c0a0-45e1-bb9a-c34f076be663" >
+		<logger level="INFO" doc:name="Logger" doc:id="170667a5-f47d-4a1c-b0c0-e112efcb52b3" message='#["private flow"]'/>
+	</flow>
+	<sub-flow name="hellomuleSub_Flow" doc:id="8f93b6e9-3a9a-4e65-bde0-726e3e5d240b" >
+		<logger level="INFO" doc:name="Logger" doc:id="c2c65a67-5f05-431d-85ae-cf269ef1972d" message='#["sub flow"]'/>
+	</sub-flow>
+</mule>
